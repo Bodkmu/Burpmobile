@@ -25,9 +25,8 @@ jobs:
         run: |
           pip install --user --upgrade buildozer cython==0.29.33
 
-      - name: Install Android SDK tools (Fix Aidl error)
+      - name: Install Android SDK tools
         run: |
-          # هذه الخطوة تضمن وجود الـ AIDL والـ SDK في مساره الصحيح
           sudo apt install -y openjdk-17-jdk
           pip install --user sh
 
@@ -35,13 +34,11 @@ jobs:
         run: |
           export PATH=$PATH:$HOME/.local/bin
           export APP_ALLOW_ROOT=1
-          # استخدام yes لإعطاء موافقة تلقائية على كل شروط الـ SDK
           yes | buildozer android debug
         
-            - name: Upload APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: BurpMobile-App
-          path: .buildozer/android/platform/build-arm64-v8a_armeabi-v7a/dists/burpmobile__arm64-v8a/build/outputs/apk/debug/*.apk
-          if-no-files-found: warn
+          path: bin/*.apk
           
