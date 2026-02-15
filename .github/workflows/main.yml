@@ -25,11 +25,12 @@ jobs:
         run: |
           pip install --user --upgrade buildozer cython==0.29.33
 
-      - name: Build with Buildozer
+      - name: Build APK (Silent Mode)
         run: |
           export PATH=$PATH:$HOME/.local/bin
           export APP_ALLOW_ROOT=1
-          yes | buildozer android debug
+          # استخدام --warn عشان نقلل الـ Logs ونمنع الـ Broken pipe
+          yes | buildozer android debug --warn
         
       - name: Upload APK
         uses: actions/upload-artifact@v4
